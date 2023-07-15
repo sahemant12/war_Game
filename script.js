@@ -16,9 +16,36 @@ const monster = {
     diceCount:1
 }
 
-function heroRender(){
-    let heroHtml=""
-    heroHtml =`<div>I'm Hero</div>`
-    document.getElementById('hero').innerHTML = heroHtml
+//random num generator b/w 1 & 6
+function generateRandomNumbers(num) {
+    // let numbers = []; 
+    // for (let i = 0; i < num; i++) {
+    //   const randomNum = Math.floor(Math.random() * 6) + 1;
+    //   numbers.push(randomNum);
+    // } 
+    // return numbers;
+    
+    //better way
+    const numbers = new Array(num).fill(0).map(()=>{
+        return Math.floor(Math.random() * 6) + 1
+    })
+    return numbers
+  }
+  function renderCharacter(char){     
+
+    const {elementId, name, avatar, health, diceCount} = char
+
+    const dicevalue = generateRandomNumbers(diceCount).map((ele)=>{
+        return `<div class="dice">${ele}</div>`
+    }).join('')
+
+    let htmlCharacter = `<div class="character-card">
+    <h4 class="name"> ${name} </h4>
+    <img class="avatar" src="${avatar}"/>
+    <p class="health">health: <b> ${health} </b></p>
+    <div class="dice-container">${dicevalue}</div> `
+    document.getElementById(elementId).innerHTML = htmlCharacter;
+
 }
-heroRender()
+renderCharacter(hero)
+renderCharacter(monster)
